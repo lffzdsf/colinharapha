@@ -15,6 +15,8 @@ Página mobile-first para montar uma colinha das Eleições 2026 em Minas Gerais
 
 Baixe os arquivos `consulta_cand_2026.zip`, `foto_cand2026_MG_div.zip` e `foto_cand2026_BR_div.zip` no [Portal de Dados Abertos do TSE](https://dadosabertos.tse.jus.br/dataset/candidatos-2026) e execute:
 
+O gerador usa Python 3 e Pillow (`python -m pip install Pillow`).
+
 ```bash
 python scripts/prepare_tse_data.py \
   --candidates /caminho/consulta_cand_2026.zip \
@@ -23,4 +25,4 @@ python scripts/prepare_tse_data.py \
   --out .
 ```
 
-A publicação no GitHub Pages ocorre automaticamente a cada envio para a branch `main`. O fluxo de publicação baixa a versão mais recente da base do TSE e gera a lista e as fotos antes de colocar o site no ar; esses arquivos derivados não precisam ficar versionados no repositório.
+A publicação no GitHub Pages ocorre automaticamente a cada envio para a branch `main`. O gerador compacta todas as fotos em pequenos atlas WebP para a página carregar mais rápido no celular; depois da atualização, versione `data/` e `assets/atlases/` junto com o restante do projeto.
