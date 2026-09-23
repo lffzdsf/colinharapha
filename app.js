@@ -64,7 +64,16 @@
       .toUpperCase();
   }
 
+  function spriteSvg(candidate) {
+    if (!candidate.photo || !Array.isArray(candidate.photoRect)) return "";
+    const [x, y, width, height, atlasWidth, atlasHeight] = candidate.photoRect;
+    return `<svg class="photo-sprite" viewBox="${x} ${y} ${width} ${height}" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><image href="${escapeHtml(candidate.photo)}" x="0" y="0" width="${atlasWidth}" height="${atlasHeight}"></image></svg>`;
+  }
+
   function photoMarkup(candidate, className) {
+    if (candidate.photo && Array.isArray(candidate.photoRect)) {
+      return `<span class="${className}">${spriteSvg(candidate)}</span>`;
+    }
     if (candidate.photo) {
       return `<span class="${className}"><img src="${escapeHtml(candidate.photo)}" alt="" loading="lazy"></span>`;
     }
@@ -299,16 +308,20 @@
     return imageCache.get(path);
   }
 
-  function drawImageCover(context, image, x, y, width, height, radius, fallbackName) {
+  function drawImageCover(context, image, x, y, width, height, radius, fallbackName, sourceRect = null) {
     context.save();
     roundedRectPath(context, x, y, width, height, radius);
     context.clip();
     if (image) {
-      const scale = Math.max(width / image.naturalWidth, height / image.naturalHeight);
+      const baseX = sourceRect?.[0] || 0;
+      const baseY = sourceRect?.[1] || 0;
+      const baseWidth = sourceRect?.[2] || image.naturalWidth || image.width;
+      const baseHeight = sourceRect?.[3] || image.naturalHeight || image.height;
+      const scale = Math.max(width / baseWidth, height / baseHeight);
       const sourceWidth = width / scale;
       const sourceHeight = height / scale;
-      const sourceX = (image.naturalWidth - sourceWidth) / 2;
-      const sourceY = Math.max(0, (image.naturalHeight - sourceHeight) * 0.18);
+      const sourceX = baseX + (baseWidth - sourceWidth) / 2;
+      const sourceY = baseY + Math.max(0, (baseHeight - sourceHeight) * 0.18);
       context.drawImage(image, sourceX, sourceY, sourceWidth, sourceHeight, x, y, width, height);
     } else {
       const gradient = context.createLinearGradient(x, y, x + width, y + height);
@@ -379,7 +392,17 @@
     const textWidth = numberX - textX - (format === "story" ? 20 : 14);
 
     if (selected) {
-      drawImageCover(context, image, photoX, photoY, photoWidth, photoHeight, radius * 0.55, item.candidate.name);
+      drawImageCover(
+        context,
+        image,
+        photoX,
+        photoY,
+        photoWidth,
+        photoHeight,
+        radius * 0.55,
+        item.candidate.name,
+        item.candidate.photoRect,
+      );
     } else {
       context.save();
       roundedRectPath(context, photoX, photoY, photoWidth, photoHeight, radius * 0.55);
@@ -603,7 +626,14 @@
         ]),
       );
 
-      document.querySelector("#raphael-photo").src = candidateData.raphael.photo;
+      const raphaelPhoto = document.querySelector("#raphael-photo");
+      if (candidateData.raphael.photoRect) {
+        raphaelPhoto.innerHTML = spriteSvg(candidateData.raphael);
+      } else if (candidateData.raphael.photo) {
+        raphaelPhoto.style.backgroundImage = `url('${candidateData.raphael.photo}')`;
+        raphaelPhoto.style.backgroundSize = "cover";
+        raphaelPhoto.style.backgroundPosition = "center top";
+      }
       document.querySelector("#source-date").textContent = ` Atualização: ${candidateData.updatedAt}.`;
       renderFields();
       updateProgress();
