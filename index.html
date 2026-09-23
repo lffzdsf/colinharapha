@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#071d49" />
+    <meta
+      name="description"
+      content="Monte sua colinha eleitoral de Minas Gerais com Raphael Mota 1038 para deputado federal."
+    />
+    <title>Minha Colinha — Raphael Mota 1038</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="Raphael Mota 1038 — início">
+        <span class="brand-mark" aria-hidden="true">RM</span>
+        <span class="brand-copy">
+          <strong>Raphael Mota</strong>
+          <span>Deputado Federal <b>1038</b></span>
+        </span>
+      </a>
+      <span class="topbar-tag">Colinha 2026</span>
+    </header>
+
+    <main id="top" class="workspace">
+      <section class="builder" aria-labelledby="page-title">
+        <div class="intro">
+          <p class="eyebrow">Eleições 2026 • Minas Gerais</p>
+          <h1 id="page-title">Monte sua colinha</h1>
+          <p>
+            Digite o nome ou o número dos seus candidatos. A foto e o número aparecem automaticamente.
+          </p>
+        </div>
+
+        <div class="progress-card" aria-live="polite">
+          <div class="progress-copy">
+            <span>Seu progresso</span>
+            <strong id="progress-text">1 de 6 escolhas definidas</strong>
+          </div>
+          <div class="progress-track" aria-hidden="true">
+            <span id="progress-bar"></span>
+          </div>
+        </div>
+
+        <article class="fixed-card" aria-label="Deputado federal já definido">
+          <div class="fixed-photo-wrap">
+            <img
+              id="raphael-photo"
+              class="fixed-photo"
+              src="assets/candidates/FMG130002537189_div.jpg"
+              alt="Foto de urna de Raphael Mota"
+            />
+          </div>
+          <div class="fixed-copy">
+            <span class="office-label">Deputado Federal</span>
+            <strong>Raphael Mota</strong>
+            <span class="party-label">Republicanos</span>
+          </div>
+          <div class="fixed-number" aria-label="Número 1038">1038</div>
+          <span class="lock-badge" title="Escolha já definida">
+            <svg aria-hidden="true" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+            Fixo
+          </span>
+        </article>
+
+        <div id="candidate-fields" class="candidate-fields" aria-busy="true">
+          <div class="loading-card"><span></span><span></span><span></span></div>
+          <div class="loading-card"><span></span><span></span><span></span></div>
+          <div class="loading-card"><span></span><span></span><span></span></div>
+        </div>
+
+        <button id="reset-button" class="text-button" type="button" disabled>
+          Limpar escolhas
+        </button>
+      </section>
+
+      <aside class="preview-panel" aria-labelledby="preview-title">
+        <div class="preview-head">
+          <div>
+            <p class="eyebrow">Prévia da imagem</p>
+            <h2 id="preview-title">Sua colinha</h2>
+          </div>
+          <div class="format-switch" role="group" aria-label="Formato da imagem">
+            <button class="format-button is-active" type="button" data-format="feed" aria-pressed="true">
+              Feed <span>4:5</span>
+            </button>
+            <button class="format-button" type="button" data-format="story" aria-pressed="false">
+              Story <span>9:16</span>
+            </button>
+          </div>
+        </div>
+
+        <div id="canvas-shell" class="canvas-shell is-feed">
+          <canvas id="collage-canvas" width="1080" height="1350" aria-label="Prévia da sua colinha eleitoral"></canvas>
+        </div>
+
+        <div class="action-row">
+          <button id="download-button" class="button button-secondary" type="button">
+            <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 3v12m0 0 5-5m-5 5-5-5"/><path d="M5 20h14"/></svg>
+            Baixar PNG
+          </button>
+          <button id="share-button" class="button button-primary" type="button">
+            <svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 10.6 6.8-4.1M8.6 13.4l6.8 4.1"/></svg>
+            Compartilhar
+          </button>
+        </div>
+        <p class="action-note">No celular, a imagem abre direto no menu de compartilhamento.</p>
+      </aside>
+    </main>
+
+    <footer class="footer">
+      <p>
+        Nomes, números e fotos da base oficial do
+        <a href="https://dadosabertos.tse.jus.br/dataset/candidatos-2026" target="_blank" rel="noreferrer">TSE</a>.
+        <span id="source-date"></span>
+      </p>
+      <p>Confira seus números antes de votar.</p>
+    </footer>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <noscript>Ative o JavaScript para montar e baixar sua colinha.</noscript>
+    <script src="app.js" defer></script>
+  </body>
+</html>
