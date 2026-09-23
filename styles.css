@@ -252,7 +252,7 @@ a:focus-visible {
   right: 0;
   width: 42px;
   height: 42px;
-  background: var(--red-500);
+  background: linear-gradient(135deg, var(--yellow-400) 0 50%, var(--green-500) 50% 100%);
   clip-path: polygon(100% 0, 100% 100%, 0 0);
 }
 
