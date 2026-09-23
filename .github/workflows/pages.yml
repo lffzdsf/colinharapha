@@ -27,28 +27,6 @@ jobs:
       - name: Configurar o GitHub Pages
         uses: actions/configure-pages@v5
 
-      - name: Baixar a base oficial do TSE
-        shell: bash
-        run: |
-          mkdir -p "$RUNNER_TEMP/colinha-tse"
-          curl --fail --location --retry 3 \
-            --output "$RUNNER_TEMP/colinha-tse/consulta_cand_2026.zip" \
-            "https://cdn.tse.jus.br/estatistica/sead/odsele/consulta_cand/consulta_cand_2026.zip"
-          curl --fail --location --retry 3 \
-            --output "$RUNNER_TEMP/colinha-tse/fotos_mg.zip" \
-            "https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/fotos/foto_cand2026_MG_div.zip"
-          curl --fail --location --retry 3 \
-            --output "$RUNNER_TEMP/colinha-tse/fotos_br.zip" \
-            "https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/fotos/foto_cand2026_BR_div.zip"
-
-      - name: Gerar lista e fotos dos candidatos
-        run: |
-          python scripts/prepare_tse_data.py \
-            --candidates "$RUNNER_TEMP/colinha-tse/consulta_cand_2026.zip" \
-            --photos-mg "$RUNNER_TEMP/colinha-tse/fotos_mg.zip" \
-            --photos-br "$RUNNER_TEMP/colinha-tse/fotos_br.zip" \
-            --out .
-
       - name: Preparar os arquivos
         uses: actions/upload-pages-artifact@v3
         with:
