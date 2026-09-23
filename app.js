@@ -485,11 +485,17 @@
     context.stroke();
     context.restore();
 
-    context.fillStyle = "#ed2d4f";
+    const accentSize = isStory ? 165 : 130;
+    const accentGradient = context.createLinearGradient(width - accentSize, 0, width, accentSize);
+    accentGradient.addColorStop(0, "#ffd54a");
+    accentGradient.addColorStop(0.5, "#ffd54a");
+    accentGradient.addColorStop(0.5, "#35b867");
+    accentGradient.addColorStop(1, "#35b867");
+    context.fillStyle = accentGradient;
     context.beginPath();
-    context.moveTo(width - (isStory ? 165 : 130), 0);
+    context.moveTo(width - accentSize, 0);
     context.lineTo(width, 0);
-    context.lineTo(width, isStory ? 165 : 130);
+    context.lineTo(width, accentSize);
     context.closePath();
     context.fill();
 
