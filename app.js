@@ -412,8 +412,8 @@
     }
 
     const roleSize = format === "story" ? 23 : 17;
-    const nameStart = format === "story" ? 35 : 27;
-    const nameMin = format === "story" ? 25 : 19;
+    const nameStart = format === "story" ? 41 : 31;
+    const nameMin = format === "story" ? 28 : 21;
     const partySize = format === "story" ? 20 : 15;
 
     context.textAlign = "left";
@@ -434,15 +434,15 @@
 
     context.save();
     roundedRectPath(context, numberX, photoY, numberWidth, photoHeight, radius * 0.55);
-    context.fillStyle = isFixed ? "rgba(7,29,73,0.31)" : selected ? "#edf6fb" : "rgba(255,255,255,0.07)";
+    context.fillStyle = isFixed ? "rgba(7,29,73,0.46)" : selected ? "#dff8ff" : "rgba(255,255,255,0.07)";
     context.fill();
     context.restore();
 
     const number = selected ? item.candidate.number : "—";
-    const numberSize = format === "story" ? (number.length >= 5 ? 56 : 68) : number.length >= 5 ? 42 : 52;
+    const numberSize = format === "story" ? (number.length >= 5 ? 66 : 82) : number.length >= 5 ? 48 : 60;
     context.textAlign = "center";
     context.textBaseline = "middle";
-    context.fillStyle = isFixed ? "#ffffff" : selected ? "#071d49" : "rgba(255,255,255,0.42)";
+    context.fillStyle = isFixed ? "#ffffff" : selected ? "#0876d1" : "rgba(255,255,255,0.42)";
     context.font = `900 ${numberSize}px Montserrat, Arial, sans-serif`;
     context.fillText(number, numberX + numberWidth / 2, y + height / 2 + 2);
   }
@@ -552,7 +552,7 @@
           height: rowHeight,
           radius: isStory ? 25 : 19,
           photoWidth: isStory ? 135 : 94,
-          numberWidth: isStory ? 226 : 178,
+          numberWidth: isStory ? 246 : 192,
           format: isStory ? "story" : "feed",
         },
         item.fixed,
@@ -599,23 +599,43 @@
     }
   }
 
-  async function shareImage() {
+  function canvasFile() {
+    const dataUrl = canvas.toDataURL("image/png", 1);
+    const binary = window.atob(dataUrl.split(",")[1]);
+    const bytes = new Uint8Array(binary.length);
+    for (let index = 0; index < binary.length; index += 1) {
+      bytes[index] = binary.charCodeAt(index);
+    }
+    const filename = `colinha-raphael-1038-${selectedFormat === "story" ? "story" : "feed"}.png`;
+    return new File([bytes], filename, { type: "image/png" });
+  }
+
+  function shareImage() {
     try {
-      const blob = await canvasBlob();
-      const filename = `colinha-raphael-1038-${selectedFormat === "story" ? "story" : "feed"}.png`;
-      const file = new File([blob], filename, { type: "image/png" });
-      if (navigator.share && navigator.canShare?.({ files: [file] })) {
-        await navigator.share({
-          title: "Minha colinha — Raphael Mota 1038",
-          text: "Minha colinha para as Eleições 2026.",
-          files: [file],
+      const file = canvasFile();
+      const shareData = {
+        title: "Minha colinha — Raphael Mota 1038",
+        text: "Minha colinha para as Eleições 2026.",
+        files: [file],
+      };
+      const supportsFileShare =
+        typeof navigator.share === "function" &&
+        (typeof navigator.canShare !== "function" || navigator.canShare({ files: [file] }));
+
+      if (supportsFileShare) {
+        navigator.share(shareData).catch((error) => {
+          if (error?.name !== "AbortError") {
+            showToast("Não foi possível abrir a rede social. Tente baixar a imagem.");
+          }
         });
         return;
       }
-      await downloadImage(false);
-      showToast("Imagem baixada. Agora é só compartilhar na sua rede favorita.");
-    } catch (error) {
-      if (error?.name !== "AbortError") showToast("Não foi possível abrir o compartilhamento.");
+
+      downloadImage(false).then(() => {
+        showToast("Imagem baixada. Selecione-a ao publicar na sua rede social.");
+      });
+    } catch {
+      showToast("Não foi possível preparar o compartilhamento.");
     }
   }
 
