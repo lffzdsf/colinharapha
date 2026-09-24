@@ -648,31 +648,76 @@ a:focus-visible {
 }
 
 .format-switch {
-  display: flex;
-  gap: 4px;
-  padding: 4px;
-  background: #eaf0f7;
-  border-radius: 11px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 7px;
+  padding: 6px;
+  background: #e7eef7;
+  border: 1px solid #d8e1ee;
+  border-radius: 15px;
 }
 
 .format-button {
-  padding: 8px 10px;
-  color: #68758e;
-  font-size: 0.66rem;
-  font-weight: 800;
-  background: transparent;
-  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-width: 106px;
+  padding: 10px 12px;
+  color: #53627e;
+  background: rgba(255, 255, 255, 0.58);
+  border: 1px solid transparent;
+  border-radius: 11px;
   cursor: pointer;
+  transition: color 180ms ease, background 180ms ease, box-shadow 180ms ease, transform 180ms ease;
 }
 
-.format-button span {
-  opacity: 0.72;
+.format-button:hover {
+  color: var(--blue-600);
+  background: #fff;
+}
+
+.format-icon {
+  display: block;
+  flex: 0 0 auto;
+  border: 2px solid currentColor;
+  border-radius: 3px;
+}
+
+.format-icon-post {
+  width: 18px;
+  height: 23px;
+}
+
+.format-icon-story {
+  width: 14px;
+  height: 25px;
+}
+
+.format-copy {
+  display: grid;
+  gap: 2px;
+  text-align: left;
+  line-height: 1;
+}
+
+.format-copy strong {
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
+.format-copy small {
+  font-size: 0.61rem;
+  font-weight: 700;
+  opacity: 0.75;
 }
 
 .format-button.is-active {
-  color: var(--navy-900);
-  background: #fff;
-  box-shadow: 0 3px 10px rgba(22, 38, 72, 0.1);
+  color: #fff;
+  background: linear-gradient(135deg, var(--blue-600), #09a9dc);
+  border-color: rgba(255, 255, 255, 0.22);
+  box-shadow: 0 7px 18px rgba(8, 118, 209, 0.25);
+  transform: translateY(-1px);
 }
 
 .canvas-shell {
@@ -934,16 +979,26 @@ noscript {
   }
 
   .preview-head {
-    align-items: center;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
   }
 
   .preview-head h2 {
     font-size: 1.17rem;
   }
 
+  .format-switch {
+    width: 100%;
+  }
+
   .format-button {
-    padding: 7px 8px;
-    font-size: 0.61rem;
+    min-width: 0;
+    padding: 10px;
+  }
+
+  .format-copy strong {
+    font-size: 0.76rem;
   }
 
   .canvas-shell.is-feed {
