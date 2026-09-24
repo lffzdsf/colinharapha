@@ -750,7 +750,7 @@ a:focus-visible {
 
 .action-row {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 0.82fr 1.18fr;
   gap: 10px;
   margin-top: 16px;
 }
@@ -760,7 +760,7 @@ a:focus-visible {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  min-height: 48px;
+  min-height: 56px;
   padding: 11px 14px;
   font-size: 0.78rem;
   font-weight: 800;
@@ -793,6 +793,67 @@ a:focus-visible {
   color: #fff;
   background: linear-gradient(135deg, var(--blue-600), #095bb8);
   box-shadow: 0 10px 22px rgba(8, 118, 209, 0.22);
+}
+
+.button-share {
+  gap: 11px;
+  padding-right: 16px;
+  padding-left: 12px;
+}
+
+.social-icons {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+}
+
+.social-icon {
+  display: grid;
+  width: 27px;
+  height: 27px;
+  place-items: center;
+  margin-left: -5px;
+  background: rgba(255, 255, 255, 0.18);
+  border: 2px solid rgba(255, 255, 255, 0.92);
+  border-radius: 50%;
+  box-shadow: 0 3px 8px rgba(3, 17, 46, 0.18);
+}
+
+.social-icon:first-child {
+  margin-left: 0;
+}
+
+.social-icon svg {
+  width: 15px;
+  height: 15px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+}
+
+.social-facebook svg {
+  fill: currentColor;
+  stroke: none;
+}
+
+.share-button-copy {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+  text-align: left;
+  line-height: 1;
+}
+
+.share-button-copy strong {
+  font-size: 0.79rem;
+  font-weight: 900;
+}
+
+.share-button-copy small {
+  font-size: 0.57rem;
+  font-weight: 600;
+  opacity: 0.8;
+  white-space: nowrap;
 }
 
 .action-note {
